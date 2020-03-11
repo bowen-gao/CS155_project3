@@ -93,11 +93,19 @@ def parse_observations(text):
 
     for line in lines:
         obs_elem = []
+        if len(line) == 1:
+            continue
         
         for word in line:
-            print(word)
-            word = re.sub(r'[^\w]', '', word).lower()
-            print(word)
+            #word = re.sub(r',.:?!', '', word).lower()
+            mapping = [',', '.', ':', '?', '!', ';', '(', ')']
+            for m in mapping:
+                word = word.replace(m, '')
+            word = word.lower()
+            if word[-1] == "'":
+                word = word[:-1]
+            if word[0] == "'":
+                word = word[1:]
             if word not in obs_map:
                 # Add unique words to the observations map.
                 obs_map[word] = obs_counter
@@ -119,15 +127,15 @@ def obs_map_reverser(obs_map):
 
     return obs_map_r
 
-def sample_sentence(hmm, obs_map, n_words=100):
+def sample_sentence(hmm, obs_map, syl_dic):
     # Get reverse map.
     obs_map_r = obs_map_reverser(obs_map)
 
     # Sample and convert sentence.
-    emission, states = hmm.generate_emission(n_words)
+    emission, states = hmm.generate_emission(obs_map_r, syl_dic)
     sentence = [obs_map_r[i] for i in emission]
 
-    return ' '.join(sentence).capitalize() + '...'
+    return ' '.join(sentence).capitalize()
 
 
 ####################

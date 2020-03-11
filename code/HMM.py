@@ -341,7 +341,38 @@ class HiddenMarkovModel:
                 for ob in range(self.D):
                     self.O[state][ob] = O_nume[state][ob] / O_deno[state][ob]
 
-    def generate_emission(self, M):
+
+    def recur(self, curr_emission, count, syl_dic, cur_state, obs_map_r, emission, state):
+        if count > 10:
+            return False, None, None
+        word = obs_map_r[curr_emission]
+        normal_syl, end_syl = syl_dic[word]
+        for syl in end_syl:
+            if count + syl == 10:
+                #emission.append(curr_emission)
+                #state.append(cur_state)
+                return True, emission[:], state[:]
+        for syl in normal_syl:
+            pre_state = cur_state
+            cur_state = random.choices([i for i in range(self.L)], self.A[pre_state])[0]
+            cur_emission = random.choices([i for i in range(self.D)], self.O[cur_state])[0]
+
+
+            emission.append(cur_emission)
+            state.append(cur_state)
+            flag, res_emission, res_state = self.recur(cur_emission, count+syl, syl_dic, cur_state, obs_map_r, emission, state)
+            if flag:
+                return True, res_emission[:], res_state[:]
+            else:
+                emission.pop()
+                state.pop()
+        return False, None, None
+
+
+
+    #recur(curr_emission, 0, syl_dic, cur_state, obs_map_r, [], [])
+
+    def generate_emission(self, obs_map_r, syl_dic):
         '''
         Generates an emission of length M, assuming that the starting state
         is chosen uniformly at random. 
@@ -355,18 +386,21 @@ class HiddenMarkovModel:
             states:     The randomly generated states as a list.
         '''
 
+        ter_flag = 1
+        count = 0
+        num = 10
         emission = []
         states = []
-        start_state = random.choices([i for i in range(self.L)], self.A_start)[0]
-        states.append(start_state)
-        emission.append(random.choices([i for i in range(self.D)], self.O[start_state])[0])
-        prev_state = start_state
-        for t in range(1, M):
-            cur_state = random.choices([i for i in range(self.L)], self.A[prev_state])[0]
-            states.append(cur_state)
-            emission.append(random.choices([i for i in range(self.D)], self.O[cur_state])[0])
-            prev_state = cur_state
-        return emission, states
+
+        while True:
+            state_0 = random.choices([i for i in range(self.L)], self.A_start)[0]
+            emission_0 = random.choices([i for i in range(self.D)], self.O[state_0])[0]
+            flag, emission_result, states_result = self.recur(emission_0, count, syl_dic, state_0, obs_map_r, emission, states)
+            if flag:
+                break
+
+
+        return emission_result, states_result
 
     def probability_alphas(self, x):
         '''
