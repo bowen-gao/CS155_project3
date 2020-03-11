@@ -18,10 +18,16 @@ def preprocess(text):
 text = preprocess(text)
 X = []
 Y = []
-puncs = [',', '.', ':', '?', '!']
+puncs = [',', '.', ':', '?', '!', ';', '(', ')']
+
+
 for i, word in enumerate(text):
     for punc in puncs:
-        word.replace(punc,'')
+        word.replace(punc, '')
+    if word[-1] == "'":
+        word = word[:-1]
+    if word[0] == "'":
+        word = word[1:]
     text[i] = word.lower()
 num = len(set(text))
 dic = {}
