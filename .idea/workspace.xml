@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dce963e-fc96-46b6-874c-50ef89cb60e5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/code/p3_lstm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/p3_lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/p3_lstm.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/2C.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-290" />
+            <state relative-caret-position="-436" />
           </provider>
         </entry>
       </file>
@@ -44,15 +44,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/2_notebook.ipynb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2343" />
+            <state relative-caret-position="-2326" />
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/HMM_helper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="97" column="22" selection-start-line="97" selection-start-column="22" selection-end-line="97" selection-end-column="22" />
+            <state relative-caret-position="1666">
+              <caret line="98" column="53" selection-start-line="98" selection-start-column="19" selection-end-line="98" selection-end-column="53" />
               <folding>
                 <element signature="e#183#192#0" expanded="true" />
               </folding>
@@ -75,8 +75,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+            <state relative-caret-position="329">
+              <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -266,7 +266,21 @@
       <option name="project" value="LOCAL" />
       <updated>1583903360694</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add lstm">
+      <created>1583906427160</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583906427161</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add lstm">
+      <created>1583907601380</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583907601380</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -294,29 +308,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="get" />
-    <option name="LAST_COMMIT_MESSAGE" value="get" />
+    <MESSAGE value="add lstm" />
+    <option name="LAST_COMMIT_MESSAGE" value="add lstm" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/code/2_notebook.ipynb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2343" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/2C.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-290" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/2D.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="23" column="10" selection-end-line="51" />
-          <folding>
-            <element signature="e#172#204#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/HMM.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
@@ -337,16 +332,6 @@
         <state relative-caret-position="-41868" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/HMM_helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="97" column="22" selection-start-line="97" selection-start-column="22" selection-end-line="97" selection-end-column="22" />
-          <folding>
-            <element signature="e#183#192#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
@@ -357,10 +342,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/code/HMM_helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1666">
+          <caret line="98" column="53" selection-start-line="98" selection-start-column="19" selection-end-line="98" selection-end-column="53" />
+          <folding>
+            <element signature="e#183#192#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/2_notebook.ipynb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2326" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/2D.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="23" column="10" selection-end-line="51" />
+          <folding>
+            <element signature="e#172#204#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/2C.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-436" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+        <state relative-caret-position="329">
+          <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>

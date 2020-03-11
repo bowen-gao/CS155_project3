@@ -51,4 +51,5 @@ print(model.summary())
 if __name__ == '__main__':
     print(X.shape, Y.shape)
     model.fit(X, Y, epochs=10)
-print(model.losses)
+    model.save("models/lstm_model")
+
