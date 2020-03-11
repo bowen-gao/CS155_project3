@@ -18,8 +18,11 @@ def preprocess(text):
 text = preprocess(text)
 X = []
 Y = []
+puncs = [',', '.', ':', '?', '!']
 for i, word in enumerate(text):
-    text[i] = re.sub(r'[^\w]', '', word).lower()
+    for punc in puncs:
+        word.replace(punc,'')
+    text[i] = word.lower()
 num = len(set(text))
 dic = {}
 for i, word in enumerate(list(set(text))):
@@ -52,4 +55,3 @@ if __name__ == '__main__':
     print(X.shape, Y.shape)
     model.fit(X, Y, epochs=10)
     model.save("models/lstm_model")
-
