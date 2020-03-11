@@ -95,7 +95,9 @@ def parse_observations(text):
         obs_elem = []
         
         for word in line:
+            print(word)
             word = re.sub(r'[^\w]', '', word).lower()
+            print(word)
             if word not in obs_map:
                 # Add unique words to the observations map.
                 obs_map[word] = obs_counter

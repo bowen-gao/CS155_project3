@@ -298,6 +298,7 @@ class HiddenMarkovModel:
         '''
 
         for iter in range(N_iters):
+            print(iter)
             A_nume = [[0. for _ in range(self.L)] for _ in range(self.L)]
             A_deno = [[0. for _ in range(self.L)] for _ in range(self.L)]
             O_nume = [[0. for _ in range(self.D)] for _ in range(self.L)]

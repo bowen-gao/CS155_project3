@@ -21,6 +21,7 @@ def unsupervised_learning(n_states, N_iters):
 
     # Train the HMM.
     HMM = unsupervised_HMM(genres, n_states, N_iters)
+    HMM.ge
 
     # Print the transition matrix.
     print("Transition Matrix:")
