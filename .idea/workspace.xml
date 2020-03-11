@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dce963e-fc96-46b6-874c-50ef89cb60e5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/code/p3_hmm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/2D.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/2D.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/2_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/code/2_notebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/HMM.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/HMM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/HMM_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/HMM_helper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/p3_lstm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,13 +60,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="261">
+              <caret line="35" selection-start-line="35" selection-end-line="36" selection-end-column="26" />
               <folding>
                 <element signature="e#172#178#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,16 +122,7 @@
         <option value="$PROJECT_DIR$/code/HMM.py" />
         <option value="$PROJECT_DIR$/code/HMM_helper.py" />
         <option value="$PROJECT_DIR$/code/p3_hmm.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/CS155_project3.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/code/p3_lstm.py" />
       </list>
     </option>
   </component>
@@ -161,6 +161,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -175,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.p3_hmm">
+  <component name="RunManager" selected="Python.p3_lstm">
     <configuration name="2D" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CS155_project3" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -218,8 +219,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="p3_lstm" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CS155_project3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/code" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code/p3_lstm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.p3_lstm" />
         <item itemvalue="Python.p3_hmm" />
         <item itemvalue="Python.2D" />
       </list>
@@ -236,6 +259,14 @@
       <option name="presentableId" value="Default" />
       <updated>1583898152240</updated>
     </task>
+    <task id="LOCAL-00001" summary="get">
+      <created>1583903360692</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583903360694</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -260,6 +291,10 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="get" />
+    <option name="LAST_COMMIT_MESSAGE" value="get" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/code/2_notebook.ipynb">
@@ -314,10 +349,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="261">
+          <caret line="35" selection-start-line="35" selection-end-line="36" selection-end-column="26" />
           <folding>
             <element signature="e#172#178#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
           </folding>
         </state>
       </provider>
