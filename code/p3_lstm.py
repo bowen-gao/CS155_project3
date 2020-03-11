@@ -1,6 +1,7 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
 import numpy as np
+import re
 
 embed_dim = 128
 lstm_out = 150
@@ -17,6 +18,8 @@ def preprocess(text):
 text = preprocess(text)
 X = []
 Y = []
+for i, word in enumerate(text):
+    text[i] = re.sub(r'[^\w]', '', word).lower()
 num = len(set(text))
 dic = {}
 for i, word in enumerate(list(set(text))):
@@ -25,7 +28,7 @@ for i, word in enumerate(text):
     tmp = [0] * num
     tmp[dic[word]] = 1
     text[i] = tmp
-for i in range(0, len(text) - 40, 5):
+for i in range(0, len(text) - 40, 1):
     print(i)
     seq = text[i:i + 40]
     label = text[i + 40]
@@ -36,7 +39,7 @@ X = np.array(X)
 Y = np.array(Y)
 
 model = Sequential()
-#model.add(Embedding(num, embed_dim, input_length=40))
+# model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
 model.add(Dense(num, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
