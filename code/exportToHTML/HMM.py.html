@@ -1,0 +1,539 @@
+<html>
+<head>
+<title>HMM.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #629755; font-style: italic;}
+.s4 { color: #6897bb;}
+.s5 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HMM.py</font>
+</center></td></tr></table>
+<pre><span class="s0">########################################</span>
+<span class="s0"># CS/CNS/EE 155 2018</span>
+<span class="s0"># Problem Set 6</span>
+<span class="s0">#</span>
+<span class="s0"># Author:       Andrew Kang</span>
+<span class="s0"># Description:  Set 6 skeleton code</span>
+<span class="s0">########################################</span>
+
+<span class="s0"># You can use this (optional) skeleton code to complete the HMM</span>
+<span class="s0"># implementation of set 5. Once each part is implemented, you can simply</span>
+<span class="s0"># execute the related problem scripts (e.g. run 'python 2G.py') to quickly</span>
+<span class="s0"># see the results from your code.</span>
+<span class="s0">#</span>
+<span class="s0"># Some pointers to get you started:</span>
+<span class="s0">#</span>
+<span class="s0">#     - Choose your notation carefully and consistently! Readable</span>
+<span class="s0">#       notation will make all the difference in the time it takes you</span>
+<span class="s0">#       to implement this class, as well as how difficult it is to debug.</span>
+<span class="s0">#</span>
+<span class="s0">#     - Read the documentation in this file! Make sure you know what</span>
+<span class="s0">#       is expected from each function and what each variable is.</span>
+<span class="s0">#</span>
+<span class="s0">#     - Any reference to &quot;the (i, j)^th&quot; element of a matrix T means that</span>
+<span class="s0">#       you should use T[i][j].</span>
+<span class="s0">#</span>
+<span class="s0">#     - Note that in our solution code, no NumPy was used. That is, there</span>
+<span class="s0">#       are no fancy tricks here, just basic coding. If you understand HMMs</span>
+<span class="s0">#       to a thorough extent, the rest of this implementation should come</span>
+<span class="s0">#       naturally. However, if you'd like to use NumPy, feel free to.</span>
+<span class="s0">#</span>
+<span class="s0">#     - Take one step at a time! Move onto the next algorithm to implement</span>
+<span class="s0">#       only if you're absolutely sure that all previous algorithms are</span>
+<span class="s0">#       correct. We are providing you waypoints for this reason.</span>
+<span class="s0">#</span>
+<span class="s0"># To get started, just fill in code where indicated. Best of luck!</span>
+
+<span class="s2">import </span><span class="s1">random</span>
+
+
+<span class="s2">class </span><span class="s1">HiddenMarkovModel:</span>
+    <span class="s3">''' 
+    Class implementation of Hidden Markov Models. 
+    '''</span>
+
+    <span class="s2">def </span><span class="s1">__init__(self</span><span class="s2">, </span><span class="s1">A</span><span class="s2">, </span><span class="s1">O):</span>
+        <span class="s3">''' 
+        Initializes an HMM. Assumes the following: 
+            - States and observations are integers starting from 0.  
+            - There is a start state (see notes on A_start below). There 
+              is no integer associated with the start state, only 
+              probabilities in the vector A_start. 
+            - There is no end state. 
+ 
+        Arguments: 
+            A:          Transition matrix with dimensions L x L. 
+                        The (i, j)^th element is the probability of 
+                        transitioning from state i to state j. Note that 
+                        this does not include the starting probabilities. 
+ 
+            O:          Observation matrix with dimensions L x D. 
+                        The (i, j)^th element is the probability of 
+                        emitting observation j given state i. 
+ 
+        Parameters: 
+            L:          Number of states. 
+             
+            D:          Number of observations. 
+             
+            A:          The transition matrix. 
+             
+            O:          The observation matrix. 
+             
+            A_start:    Starting transition probabilities. The i^th element 
+                        is the probability of transitioning from the start 
+                        state to state i. For simplicity, we assume that 
+                        this distribution is uniform. 
+        '''</span>
+
+        <span class="s1">self.L = len(A)</span>
+        <span class="s1">self.D = len(O[</span><span class="s4">0</span><span class="s1">])</span>
+        <span class="s1">self.A = A</span>
+        <span class="s1">self.O = O</span>
+        <span class="s1">self.A_start = [</span><span class="s4">1. </span><span class="s1">/ self.L </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)]</span>
+
+    <span class="s2">def </span><span class="s1">viterbi(self</span><span class="s2">, </span><span class="s1">x):</span>
+        <span class="s3">''' 
+        Uses the Viterbi algorithm to find the max probability state  
+        sequence corresponding to a given input sequence. 
+ 
+        Arguments: 
+            x:          Input sequence in the form of a list of length M, 
+                        consisting of integers ranging from 0 to D - 1. 
+ 
+        Returns: 
+            max_seq:    State sequence corresponding to x with the highest 
+                        probability. 
+        '''</span>
+
+        <span class="s1">M = len(x)  </span><span class="s0"># Length of sequence.</span>
+        <span class="s0"># The (i, j)^th elements of probs and seqs are the max probability</span>
+        <span class="s0"># of the prefix of length i ending in state j and the prefix</span>
+        <span class="s0"># that gives this probability, respectively.</span>
+        <span class="s0">#</span>
+        <span class="s0"># For instance, probs[1][0] is the probability of the prefix of</span>
+        <span class="s0"># length 1 ending in state 0.</span>
+        <span class="s1">probs = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(M + </span><span class="s4">1</span><span class="s1">)]</span>
+        <span class="s1">seqs = [[</span><span class="s5">'' </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(M + </span><span class="s4">1</span><span class="s1">)]</span>
+
+        <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+            <span class="s1">probs[</span><span class="s4">1</span><span class="s1">][state] = self.A_start[state] * self.O[state][x[</span><span class="s4">0</span><span class="s1">]]</span>
+        <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(</span><span class="s4">2</span><span class="s2">, </span><span class="s1">M + </span><span class="s4">1</span><span class="s1">):</span>
+            <span class="s2">for </span><span class="s1">cur_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s1">max_prob = </span><span class="s4">0</span>
+                <span class="s1">max_prev = </span><span class="s4">0</span>
+                <span class="s2">for </span><span class="s1">prev_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                    <span class="s1">cur_prob = probs[t - </span><span class="s4">1</span><span class="s1">][prev_state] * self.A[prev_state][cur_state] * self.O[cur_state][x[t - </span><span class="s4">1</span><span class="s1">]]</span>
+                    <span class="s2">if </span><span class="s1">cur_prob &gt; max_prob:</span>
+                        <span class="s1">max_prob = cur_prob</span>
+                        <span class="s1">max_prev = prev_state</span>
+                <span class="s1">probs[t][cur_state] = max_prob</span>
+                <span class="s1">seqs[t][cur_state] = max_prev</span>
+        <span class="s1">max_prob = </span><span class="s4">0</span>
+        <span class="s1">last_state = </span><span class="s4">0</span>
+        <span class="s1">max_seq = </span><span class="s5">''</span>
+        <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+            <span class="s1">cur_prob = probs[-</span><span class="s4">1</span><span class="s1">][state]</span>
+            <span class="s2">if </span><span class="s1">cur_prob &gt; max_prob:</span>
+                <span class="s1">last_state = state</span>
+                <span class="s1">max_prob = cur_prob</span>
+        <span class="s1">cur_state = last_state</span>
+        <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(</span><span class="s4">1</span><span class="s2">, </span><span class="s1">M + </span><span class="s4">1</span><span class="s1">):</span>
+            <span class="s1">prev_state = seqs[M + </span><span class="s4">1 </span><span class="s1">- i][cur_state]</span>
+            <span class="s1">max_seq = str(cur_state) + max_seq</span>
+            <span class="s1">cur_state = prev_state</span>
+        <span class="s2">return </span><span class="s1">max_seq</span>
+
+    <span class="s2">def </span><span class="s1">forward(self</span><span class="s2">, </span><span class="s1">x</span><span class="s2">, </span><span class="s1">normalize=</span><span class="s2">False</span><span class="s1">):</span>
+        <span class="s3">''' 
+        Uses the forward algorithm to calculate the alpha probability 
+        vectors corresponding to a given input sequence. 
+ 
+        Arguments: 
+            x:          Input sequence in the form of a list of length M, 
+                        consisting of integers ranging from 0 to D - 1. 
+ 
+            normalize:  Whether to normalize each set of alpha_j(i) vectors 
+                        at each i. This is useful to avoid underflow in 
+                        unsupervised learning. 
+ 
+        Returns: 
+            alphas:     Vector of alphas. 
+ 
+                        The (i, j)^th element of alphas is alpha_j(i), 
+                        i.e. the probability of observing prefix x^1:i 
+                        and state y^i = j. 
+ 
+                        e.g. alphas[1][0] corresponds to the probability 
+                        of observing x^1:1, i.e. the first observation, 
+                        given that y^1 = 0, i.e. the first state is 0. 
+        '''</span>
+
+        <span class="s1">M = len(x)  </span><span class="s0"># Length of sequence.</span>
+        <span class="s1">alphas = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(M + </span><span class="s4">1</span><span class="s1">)]</span>
+        <span class="s1">total = </span><span class="s4">0</span>
+        <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+            <span class="s1">alphas[</span><span class="s4">1</span><span class="s1">][state] = self.A_start[state] * self.O[state][x[</span><span class="s4">0</span><span class="s1">]]</span>
+            <span class="s1">total += alphas[</span><span class="s4">1</span><span class="s1">][state]</span>
+        <span class="s2">if </span><span class="s1">normalize:</span>
+            <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s1">alphas[</span><span class="s4">1</span><span class="s1">][state] /= total</span>
+        <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(</span><span class="s4">2</span><span class="s2">, </span><span class="s1">M + </span><span class="s4">1</span><span class="s1">):</span>
+            <span class="s1">total = </span><span class="s4">0</span>
+            <span class="s2">for </span><span class="s1">cur_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s1">alphas[t][cur_state] = self.O[cur_state][x[t - </span><span class="s4">1</span><span class="s1">]]</span>
+                <span class="s1">prob = </span><span class="s4">0</span>
+                <span class="s2">for </span><span class="s1">prev_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                    <span class="s1">prob += self.A[prev_state][cur_state] * alphas[t - </span><span class="s4">1</span><span class="s1">][prev_state]</span>
+                <span class="s1">alphas[t][cur_state] *= prob</span>
+                <span class="s1">total += alphas[t][cur_state]</span>
+            <span class="s2">if </span><span class="s1">normalize:</span>
+                <span class="s2">for </span><span class="s1">cur_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                    <span class="s1">alphas[t][cur_state] /= total</span>
+        <span class="s2">return </span><span class="s1">alphas</span>
+
+    <span class="s2">def </span><span class="s1">backward(self</span><span class="s2">, </span><span class="s1">x</span><span class="s2">, </span><span class="s1">normalize=</span><span class="s2">False</span><span class="s1">):</span>
+        <span class="s3">''' 
+        Uses the backward algorithm to calculate the beta probability 
+        vectors corresponding to a given input sequence. 
+ 
+        Arguments: 
+            x:          Input sequence in the form of a list of length M, 
+                        consisting of integers ranging from 0 to D - 1. 
+ 
+            normalize:  Whether to normalize each set of alpha_j(i) vectors 
+                        at each i. This is useful to avoid underflow in 
+                        unsupervised learning. 
+ 
+        Returns: 
+            betas:      Vector of betas. 
+ 
+                        The (i, j)^th element of betas is beta_j(i), i.e. 
+                        the probability of observing prefix x^(i+1):M and 
+                        state y^i = j. 
+ 
+                        e.g. betas[M][0] corresponds to the probability 
+                        of observing x^M+1:M, i.e. no observations, 
+                        given that y^M = 0, i.e. the last state is 0. 
+        '''</span>
+
+        <span class="s1">M = len(x)  </span><span class="s0"># Length of sequence.</span>
+        <span class="s1">betas = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(M + </span><span class="s4">1</span><span class="s1">)]</span>
+
+        <span class="s1">total = </span><span class="s4">0</span>
+        <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+            <span class="s1">betas[-</span><span class="s4">1</span><span class="s1">][state] = </span><span class="s4">1</span>
+            <span class="s1">total += betas[-</span><span class="s4">1</span><span class="s1">][state]</span>
+        <span class="s2">if </span><span class="s1">normalize:</span>
+            <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s1">betas[-</span><span class="s4">1</span><span class="s1">][state] /= total</span>
+        <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(M - </span><span class="s4">1</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s1">-</span><span class="s4">1</span><span class="s1">):</span>
+            <span class="s1">total = </span><span class="s4">0</span>
+            <span class="s2">for </span><span class="s1">cur_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s2">for </span><span class="s1">next_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                    <span class="s1">betas[t][cur_state] += self.A[cur_state][next_state] * betas[t + </span><span class="s4">1</span><span class="s1">][next_state] * \</span>
+                                           <span class="s1">self.O[next_state][x[t]]</span>
+                <span class="s1">total += betas[t][cur_state]</span>
+            <span class="s2">if </span><span class="s1">normalize:</span>
+                <span class="s2">for </span><span class="s1">cur_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                    <span class="s1">betas[t][cur_state] /= total</span>
+
+        <span class="s2">return </span><span class="s1">betas</span>
+
+    <span class="s2">def </span><span class="s1">supervised_learning(self</span><span class="s2">, </span><span class="s1">X</span><span class="s2">, </span><span class="s1">Y):</span>
+        <span class="s3">''' 
+        Trains the HMM using the Maximum Likelihood closed form solutions 
+        for the transition and observation matrices on a labeled 
+        datset (X, Y). Note that this method does not return anything, but 
+        instead updates the attributes of the HMM object. 
+ 
+        Arguments: 
+            X:          A dataset consisting of input sequences in the form 
+                        of lists of variable length, consisting of integers  
+                        ranging from 0 to D - 1. In other words, a list of 
+                        lists. 
+ 
+            Y:          A dataset consisting of state sequences in the form 
+                        of lists of variable length, consisting of integers  
+                        ranging from 0 to L - 1. In other words, a list of 
+                        lists. 
+ 
+                        Note that the elements in X line up with those in Y. 
+        '''</span>
+
+        <span class="s0"># Calculate each element of A using the M-step formulas.</span>
+
+        <span class="s2">for </span><span class="s1">prev_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+            <span class="s2">for </span><span class="s1">next_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s1">nume = </span><span class="s4">0</span>
+                <span class="s1">deno = </span><span class="s4">0</span>
+                <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(X)):</span>
+                    <span class="s1">obs = X[i]</span>
+                    <span class="s1">sts = Y[i]</span>
+                    <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(len(obs) - </span><span class="s4">1</span><span class="s1">):</span>
+                        <span class="s2">if </span><span class="s1">sts[t] == prev_state:</span>
+                            <span class="s1">deno += </span><span class="s4">1</span>
+                            <span class="s2">if </span><span class="s1">sts[t + </span><span class="s4">1</span><span class="s1">] == next_state:</span>
+                                <span class="s1">nume += </span><span class="s4">1</span>
+                <span class="s1">self.A[prev_state][next_state] = float(nume) / deno</span>
+
+        <span class="s0"># Calculate each element of O using the M-step formulas.</span>
+
+        <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+            <span class="s2">for </span><span class="s1">ob </span><span class="s2">in </span><span class="s1">range(self.D):</span>
+                <span class="s1">nume = </span><span class="s4">0</span>
+                <span class="s1">deno = </span><span class="s4">0</span>
+                <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(X)):</span>
+                    <span class="s1">obs = X[i]</span>
+                    <span class="s1">sts = Y[i]</span>
+                    <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(len(obs)):</span>
+                        <span class="s2">if </span><span class="s1">sts[t] == state:</span>
+                            <span class="s1">deno += </span><span class="s4">1</span>
+                            <span class="s2">if </span><span class="s1">obs[t] == ob:</span>
+                                <span class="s1">nume += </span><span class="s4">1</span>
+                <span class="s1">self.O[state][ob] = float(nume) / deno</span>
+
+    <span class="s2">def </span><span class="s1">unsupervised_learning(self</span><span class="s2">, </span><span class="s1">X</span><span class="s2">, </span><span class="s1">N_iters):</span>
+        <span class="s3">''' 
+        Trains the HMM using the Baum-Welch algorithm on an unlabeled 
+        datset X. Note that this method does not return anything, but 
+        instead updates the attributes of the HMM object. 
+ 
+        Arguments: 
+            X:          A dataset consisting of input sequences in the form 
+                        of lists of length M, consisting of integers ranging 
+                        from 0 to D - 1. In other words, a list of lists. 
+ 
+            N_iters:    The number of iterations to train on. 
+        '''</span>
+
+        <span class="s2">for </span><span class="s1">iter </span><span class="s2">in </span><span class="s1">range(N_iters):</span>
+            <span class="s1">print(iter)</span>
+            <span class="s1">A_nume = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)]</span>
+            <span class="s1">A_deno = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)]</span>
+            <span class="s1">O_nume = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.D)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)]</span>
+            <span class="s1">O_deno = [[</span><span class="s4">0. </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.D)] </span><span class="s2">for </span><span class="s1">_ </span><span class="s2">in </span><span class="s1">range(self.L)]</span>
+            <span class="s2">for </span><span class="s1">obs </span><span class="s2">in </span><span class="s1">X:</span>
+                <span class="s1">alphas = self.forward(obs</span><span class="s2">, </span><span class="s1">normalize=</span><span class="s2">True</span><span class="s1">)</span>
+                <span class="s1">betas = self.backward(obs</span><span class="s2">, </span><span class="s1">normalize=</span><span class="s2">True</span><span class="s1">)</span>
+                <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(len(obs) - </span><span class="s4">1</span><span class="s1">):</span>
+                    <span class="s1">deno = </span><span class="s4">0.0</span>
+                    <span class="s1">norm = sum([a * b </span><span class="s2">for </span><span class="s1">a</span><span class="s2">, </span><span class="s1">b </span><span class="s2">in </span><span class="s1">zip(alphas[t + </span><span class="s4">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">betas[t + </span><span class="s4">1</span><span class="s1">])])</span>
+                    <span class="s2">for </span><span class="s1">state1 </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                        <span class="s2">for </span><span class="s1">state2 </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                            <span class="s1">deno += alphas[t + </span><span class="s4">1</span><span class="s1">][state1] * self.A[state1][state2] * self.O[state2][</span>
+                                <span class="s1">obs[t + </span><span class="s4">1</span><span class="s1">]] * \</span>
+                                    <span class="s1">betas[t + </span><span class="s4">2</span><span class="s1">][state2]</span>
+                    <span class="s2">for </span><span class="s1">prev_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                        <span class="s2">for </span><span class="s1">next_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                            <span class="s1">A_deno[prev_state][next_state] += alphas[t + </span><span class="s4">1</span><span class="s1">][prev_state] * betas[t + </span><span class="s4">1</span><span class="s1">][</span>
+                                <span class="s1">prev_state] / norm</span>
+                            <span class="s1">nume = alphas[t + </span><span class="s4">1</span><span class="s1">][prev_state] * self.A[prev_state][next_state] * self.O[next_state][</span>
+                                <span class="s1">obs[t + </span><span class="s4">1</span><span class="s1">]] * \</span>
+                                   <span class="s1">betas[t + </span><span class="s4">2</span><span class="s1">][next_state]</span>
+                            <span class="s1">A_nume[prev_state][next_state] += nume / deno</span>
+                <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(len(obs)):</span>
+                    <span class="s1">norm = sum([a * b </span><span class="s2">for </span><span class="s1">a</span><span class="s2">, </span><span class="s1">b </span><span class="s2">in </span><span class="s1">zip(alphas[t + </span><span class="s4">1</span><span class="s1">]</span><span class="s2">, </span><span class="s1">betas[t + </span><span class="s4">1</span><span class="s1">])])</span>
+                    <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                        <span class="s2">for </span><span class="s1">ob </span><span class="s2">in </span><span class="s1">range(self.D):</span>
+                            <span class="s1">O_deno[state][ob] += alphas[t + </span><span class="s4">1</span><span class="s1">][state] * betas[t + </span><span class="s4">1</span><span class="s1">][state] / norm</span>
+                            <span class="s2">if </span><span class="s1">ob == obs[t]:</span>
+                                <span class="s1">O_nume[state][ob] += alphas[t + </span><span class="s4">1</span><span class="s1">][state] * betas[t + </span><span class="s4">1</span><span class="s1">][state] / norm</span>
+            <span class="s2">for </span><span class="s1">prev_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s2">for </span><span class="s1">next_state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                    <span class="s1">self.A[prev_state][next_state] = A_nume[prev_state][next_state] / A_deno[prev_state][next_state]</span>
+            <span class="s2">for </span><span class="s1">state </span><span class="s2">in </span><span class="s1">range(self.L):</span>
+                <span class="s2">for </span><span class="s1">ob </span><span class="s2">in </span><span class="s1">range(self.D):</span>
+                    <span class="s1">self.O[state][ob] = O_nume[state][ob] / O_deno[state][ob]</span>
+
+    <span class="s2">def </span><span class="s1">generate_emission(self</span><span class="s2">, </span><span class="s1">M):</span>
+        <span class="s3">''' 
+        Generates an emission of length M, assuming that the starting state 
+        is chosen uniformly at random.  
+ 
+        Arguments: 
+            M:          Length of the emission to generate. 
+ 
+        Returns: 
+            emission:   The randomly generated emission as a list. 
+ 
+            states:     The randomly generated states as a list. 
+        '''</span>
+
+        <span class="s1">emission = []</span>
+        <span class="s1">states = []</span>
+        <span class="s1">start_state = random.choices([i </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(self.L)]</span><span class="s2">, </span><span class="s1">self.A_start)[</span><span class="s4">0</span><span class="s1">]</span>
+        <span class="s1">states.append(start_state)</span>
+        <span class="s1">emission.append(random.choices([i </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(self.D)]</span><span class="s2">, </span><span class="s1">self.O[start_state])[</span><span class="s4">0</span><span class="s1">])</span>
+        <span class="s1">prev_state = start_state</span>
+        <span class="s2">for </span><span class="s1">t </span><span class="s2">in </span><span class="s1">range(</span><span class="s4">1</span><span class="s2">, </span><span class="s1">M):</span>
+            <span class="s1">cur_state = random.choices([i </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(self.L)]</span><span class="s2">, </span><span class="s1">self.A[prev_state])[</span><span class="s4">0</span><span class="s1">]</span>
+            <span class="s1">states.append(cur_state)</span>
+            <span class="s1">emission.append(random.choices([i </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(self.D)]</span><span class="s2">, </span><span class="s1">self.O[cur_state])[</span><span class="s4">0</span><span class="s1">])</span>
+            <span class="s1">prev_state = cur_state</span>
+        <span class="s2">return </span><span class="s1">emission</span><span class="s2">, </span><span class="s1">states</span>
+
+    <span class="s2">def </span><span class="s1">probability_alphas(self</span><span class="s2">, </span><span class="s1">x):</span>
+        <span class="s3">''' 
+        Finds the maximum probability of a given input sequence using 
+        the forward algorithm. 
+ 
+        Arguments: 
+            x:          Input sequence in the form of a list of length M, 
+                        consisting of integers ranging from 0 to D - 1. 
+ 
+        Returns: 
+            prob:       Total probability that x can occur. 
+        '''</span>
+
+        <span class="s0"># Calculate alpha vectors.</span>
+        <span class="s1">alphas = self.forward(x)</span>
+
+        <span class="s0"># alpha_j(M) gives the probability that the state sequence ends</span>
+        <span class="s0"># in j. Summing this value over all possible states j gives the</span>
+        <span class="s0"># total probability of x paired with any state sequence, i.e.</span>
+        <span class="s0"># the probability of x.</span>
+        <span class="s1">prob = sum(alphas[-</span><span class="s4">1</span><span class="s1">])</span>
+        <span class="s2">return </span><span class="s1">prob</span>
+
+    <span class="s2">def </span><span class="s1">probability_betas(self</span><span class="s2">, </span><span class="s1">x):</span>
+        <span class="s3">''' 
+        Finds the maximum probability of a given input sequence using 
+        the backward algorithm. 
+ 
+        Arguments: 
+            x:          Input sequence in the form of a list of length M, 
+                        consisting of integers ranging from 0 to D - 1. 
+ 
+        Returns: 
+            prob:       Total probability that x can occur. 
+        '''</span>
+
+        <span class="s1">betas = self.backward(x)</span>
+
+        <span class="s0"># beta_j(1) gives the probability that the state sequence starts</span>
+        <span class="s0"># with j. Summing this, multiplied by the starting transition</span>
+        <span class="s0"># probability and the observation probability, over all states</span>
+        <span class="s0"># gives the total probability of x paired with any state</span>
+        <span class="s0"># sequence, i.e. the probability of x.</span>
+        <span class="s1">prob = sum([betas[</span><span class="s4">1</span><span class="s1">][j] * self.A_start[j] * self.O[j][x[</span><span class="s4">0</span><span class="s1">]] \</span>
+                    <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(self.L)])</span>
+
+        <span class="s2">return </span><span class="s1">prob</span>
+
+
+<span class="s2">def </span><span class="s1">supervised_HMM(X</span><span class="s2">, </span><span class="s1">Y):</span>
+    <span class="s3">''' 
+    Helper function to train a supervised HMM. The function determines the 
+    number of unique states and observations in the given data, initializes 
+    the transition and observation matrices, creates the HMM, and then runs 
+    the training function for supervised learning. 
+ 
+    Arguments: 
+        X:          A dataset consisting of input sequences in the form 
+                    of lists of variable length, consisting of integers  
+                    ranging from 0 to D - 1. In other words, a list of lists. 
+ 
+        Y:          A dataset consisting of state sequences in the form 
+                    of lists of variable length, consisting of integers  
+                    ranging from 0 to L - 1. In other words, a list of lists. 
+                    Note that the elements in X line up with those in Y. 
+    '''</span>
+    <span class="s0"># Make a set of observations.</span>
+    <span class="s1">observations = set()</span>
+    <span class="s2">for </span><span class="s1">x </span><span class="s2">in </span><span class="s1">X:</span>
+        <span class="s1">observations |= set(x)</span>
+
+    <span class="s0"># Make a set of states.</span>
+    <span class="s1">states = set()</span>
+    <span class="s2">for </span><span class="s1">y </span><span class="s2">in </span><span class="s1">Y:</span>
+        <span class="s1">states |= set(y)</span>
+
+    <span class="s0"># Compute L and D.</span>
+    <span class="s1">L = len(states)</span>
+    <span class="s1">D = len(observations)</span>
+
+    <span class="s0"># Randomly initialize and normalize matrix A.</span>
+    <span class="s1">A = [[random.random() </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(L)] </span><span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(L)]</span>
+
+    <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(A)):</span>
+        <span class="s1">norm = sum(A[i])</span>
+        <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(A[i])):</span>
+            <span class="s1">A[i][j] /= norm</span>
+
+    <span class="s0"># Randomly initialize and normalize matrix O.</span>
+    <span class="s1">O = [[random.random() </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(D)] </span><span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(L)]</span>
+
+    <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(O)):</span>
+        <span class="s1">norm = sum(O[i])</span>
+        <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(O[i])):</span>
+            <span class="s1">O[i][j] /= norm</span>
+
+    <span class="s0"># Train an HMM with labeled data.</span>
+    <span class="s1">HMM = HiddenMarkovModel(A</span><span class="s2">, </span><span class="s1">O)</span>
+    <span class="s1">HMM.supervised_learning(X</span><span class="s2">, </span><span class="s1">Y)</span>
+
+    <span class="s2">return </span><span class="s1">HMM</span>
+
+
+<span class="s2">def </span><span class="s1">unsupervised_HMM(X</span><span class="s2">, </span><span class="s1">n_states</span><span class="s2">, </span><span class="s1">N_iters):</span>
+    <span class="s3">''' 
+    Helper function to train an unsupervised HMM. The function determines the 
+    number of unique observations in the given data, initializes 
+    the transition and observation matrices, creates the HMM, and then runs 
+    the training function for unsupervised learing. 
+ 
+    Arguments: 
+        X:          A dataset consisting of input sequences in the form 
+                    of lists of variable length, consisting of integers  
+                    ranging from 0 to D - 1. In other words, a list of lists. 
+ 
+        n_states:   Number of hidden states to use in training. 
+         
+        N_iters:    The number of iterations to train on. 
+    '''</span>
+
+    <span class="s0"># Make a set of observations.</span>
+    <span class="s1">observations = set()</span>
+    <span class="s2">for </span><span class="s1">x </span><span class="s2">in </span><span class="s1">X:</span>
+        <span class="s1">observations |= set(x)</span>
+
+    <span class="s0"># Compute L and D.</span>
+    <span class="s1">L = n_states</span>
+    <span class="s1">D = len(observations)</span>
+
+    <span class="s0"># Randomly initialize and normalize matrix A.</span>
+    <span class="s1">random.seed(</span><span class="s4">2020</span><span class="s1">)</span>
+    <span class="s1">A = [[random.random() </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(L)] </span><span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(L)]</span>
+
+    <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(A)):</span>
+        <span class="s1">norm = sum(A[i])</span>
+        <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(A[i])):</span>
+            <span class="s1">A[i][j] /= norm</span>
+
+    <span class="s0"># Randomly initialize and normalize matrix O.</span>
+    <span class="s1">random.seed(</span><span class="s4">155</span><span class="s1">)</span>
+    <span class="s1">O = [[random.random() </span><span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(D)] </span><span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(L)]</span>
+
+    <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(O)):</span>
+        <span class="s1">norm = sum(O[i])</span>
+        <span class="s2">for </span><span class="s1">j </span><span class="s2">in </span><span class="s1">range(len(O[i])):</span>
+            <span class="s1">O[i][j] /= norm</span>
+
+    <span class="s0"># Train an HMM with unlabeled data.</span>
+    <span class="s1">HMM = HiddenMarkovModel(A</span><span class="s2">, </span><span class="s1">O)</span>
+    <span class="s1">HMM.unsupervised_learning(X</span><span class="s2">, </span><span class="s1">N_iters)</span>
+
+    <span class="s2">return </span><span class="s1">HMM</span>
+</pre>
+</body>
+</html>
