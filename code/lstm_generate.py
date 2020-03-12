@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Embedding, LSTM, Dense
+from tensorflow.keras.layers import Embedding, LSTM, Dense, Lambda, Activation
 from tensorflow.keras.models import load_model
 import numpy as np
 import tensorflow as tf
@@ -47,7 +47,9 @@ Y = np.array(Y)
 model = Sequential()
 # model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
-model.add(Dense(num, activation='softmax'))
+model.add(Dense(num))
+model.add(Lambda(lambda x: x / 1.5))
+model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
 
@@ -67,8 +69,9 @@ def genertate(model):
             tmp[index] = 1
             x.append(tmp)
         x = np.array(x).reshape((1, len(x), len(x[1])))
-        y = model.predict(x)
-        index = random.choices([i for i in range(num)], y[0])[0]
+        y = model.predict(x)[0]
+
+        index = random.choices([i for i in range(num)], y)[0]
         char = index2char[index]
         text += char
     print(text)
@@ -76,6 +79,6 @@ def genertate(model):
 
 if __name__ == '__main__':
     model = load_model('checkpoints/model')
-    #print(newmodel.evaluate(X, Y, verbose=1))
+    # print(newmodel.evaluate(X, Y, verbose=1))
     # model.save("models/lstm_model")
     genertate(model)

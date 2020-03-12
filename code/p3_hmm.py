@@ -7,13 +7,14 @@
 ########################################
 
 import os
-from Utility import Utility
+import pickle
 from HMM import unsupervised_HMM
 from HMM_helper import (
     parse_observations,
     sample_sentence,
     visualize_sparsities,
 )
+from Utility import Utility
 
 
 
@@ -21,13 +22,21 @@ from HMM_helper import (
 
 
 if __name__ == '__main__':
+    train = True
     n_states = 5
-    N_iters = 1
-    text = open(os.path.join(os.getcwd(), '../data/test.txt')).read()
+    N_iters = 50
+    text = open(os.path.join(os.getcwd(), '../data/shakespeare.txt')).read()
     obs, obs_map, stress_dic = parse_observations(text)
     #print(obs)
     # Train the HMM.
-    HMM = unsupervised_HMM(obs, n_states, N_iters)
+    if train:
+        HMM = unsupervised_HMM(obs, n_states, N_iters)
+        file = open('hmm.txt','wb')
+        pickle.dump(HMM, file)
+        file.close()
+    else:
+        file = open("hmm.txt", "rb")
+        HMM = pickle.load(file)
 
     #######
     dic = open(os.path.join(os.getcwd(), '../data/Syllable_dictionary.txt')).read()
@@ -53,10 +62,11 @@ if __name__ == '__main__':
         syl_dic[line[0]] = [normal_syl, end_syl]
     #########
     #print(syl_dic)
-
-    for i in range(12):
-        print(sample_sentence(HMM, obs_map, syl_dic, stress_dic))
-    for i in range(2):
-        print('  ' + sample_sentence(HMM, obs_map, syl_dic, stress_dic))
+    for j in range(10):
+        for i in range(12):
+            print(sample_sentence(HMM, obs_map, syl_dic, stress_dic))
+        for i in range(2):
+            print('  ' + sample_sentence(HMM, obs_map, syl_dic, stress_dic))
+        print('')
 
 

@@ -105,10 +105,14 @@ def parse_observations(text):
             for m in mapping:
                 word = word.replace(m, '')
             word = word.lower()
-            if word[-1] == "'":
-                word = word[:-1]
-            if word[0] == "'":
-                word = word[1:]
+            
+            special = ["'gainst" ,"'greeing", "'scaped'", "'tis", "'twixt"]
+            if word not in special:
+                if word[-1] == "'":
+                    word = word[:-1]
+                if word[0] == "'":
+                    word = word[1:]
+            line[i] = word
             if word not in obs_map:
                 # Add unique words to the observations map.
                 obs_map[word] = obs_counter
@@ -116,11 +120,12 @@ def parse_observations(text):
             
             # Add the encoded word.
             obs_elem.append(obs_map[word])
-
-            if i + 1 < len(line):
-                stress_dic[word].add(line[i + 1])
-            if i - 1 >= 0:
-                stress_dic[word].add(line[i - 1])
+        
+        for i, word in enumerate(line):
+            if i + 2 < len(line):
+                stress_dic[word].add(line[i + 2])
+            if i - 2 >= 0:
+                stress_dic[word].add(line[i - 2])
         
         # Add the encoded sequence.
         obs.append(obs_elem)

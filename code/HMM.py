@@ -342,19 +342,23 @@ class HiddenMarkovModel:
                     self.O[state][ob] = O_nume[state][ob] / O_deno[state][ob]
 
     def dfs(self, word1, word2, stress_dic, visited):
-        print(word1, word2)
-        if word1 in visited:
-            return False
+        #print(stress_dic)
+        #print(word1, word2)
+        #print(visited)
+        #if word1 in visited:
+            #return False
         if word2 in stress_dic[word1]:
-            return True
+            return False
         visited.add(word1)
         for neighbor in stress_dic[word1]:
-            if self.dfs(neighbor, word2, stress_dic, visited):
-                return True
-        return False
+            if neighbor not in visited:
+                if not self.dfs(neighbor, word2, stress_dic, visited):
+                    return False
+        return True
 
 
     def recur(self, curr_emission, count, syl_dic, cur_state, obs_map_r, emission, state, stress_dic):
+        #print(emission)
         if count > 10:
             return False, None, None
         word = obs_map_r[curr_emission]
@@ -373,8 +377,12 @@ class HiddenMarkovModel:
                 s = set()
                 next_state = random.choices([i for i in range(self.L)], self.A[pre_state])[0]
                 next_emission = random.choices([i for i in range(self.D)], self.O[cur_state])[0]
+                #print(next_state)
+                #print('curr_e = ',obs_map_r[next_emission])
                 if self.dfs(obs_map_r[curr_emission], obs_map_r[next_emission], stress_dic, s):
+                    #print('dsd')
                     break
+                #print('dsd')
             if count + syl < 10:
                 flag, res_emission, res_state = self.recur(next_emission, count+syl, syl_dic, next_state, obs_map_r, emission, state, stress_dic)
                 if flag:
