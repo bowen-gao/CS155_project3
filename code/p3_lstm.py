@@ -23,9 +23,13 @@ Y = []
 
 num = len(set(text))
 dic = {}
-for i, char in enumerate(list(set(text))):
-    dic[char] = i
+count=0
+for char in text:
+    if char not in dic:
+        dic[char] = count
+        count+=1
 text_list = []
+print(dic)
 for char in text:
     tmp = [0] * num
     tmp[dic[char]] = 1
@@ -48,13 +52,11 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 print(model.summary())
 
 # X nx40
-cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/model.h5",
-                                                 save_weights_only=True,
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/model",
+                                                 save_weights_only=False,
                                                  verbose=1)
 
 
-def genertate(model):
-    pass
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
+from tensorflow.keras.models import load_model
 import numpy as np
 import tensorflow as tf
 import random
@@ -23,10 +24,26 @@ text = new_txt
 num = len(set(text))
 char2index = {}
 index2char = {}
-for i, char in enumerate(list(set(text))):
-    char2index[char] = i
-    index2char[i] = char
+count = 0
+for char in text:
+    if char not in char2index:
+        char2index[char] = count
+        index2char[count] = char
+        count += 1
+print(char2index)
+text_list = []
+for char in text:
+    tmp = [0] * num
+    tmp[char2index[char]] = 1
+    text_list.append(tmp)
+for i in range(0, len(text) - 40, 1):
+    seq = text_list[i:i + 40]
+    label = text_list[i + 40]
+    X.append(seq)
+    Y.append(label)
 
+X = np.array(X)
+Y = np.array(Y)
 model = Sequential()
 # model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
@@ -36,7 +53,7 @@ print(model.summary())
 
 # X nx40
 cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/cp.ckpt",
-                                                 save_weights_only=True,
+                                                 save_weights_only=False,
                                                  verbose=1)
 
 
@@ -58,7 +75,7 @@ def genertate(model):
 
 
 if __name__ == '__main__':
-    model.load_weights("checkpoints/cp.ckpt")
-    # print(model.evaluate(X, Y, verbose=1))
+    model = load_model('checkpoints/model')
+    #print(newmodel.evaluate(X, Y, verbose=1))
     # model.save("models/lstm_model")
     genertate(model)

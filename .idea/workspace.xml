@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dce963e-fc96-46b6-874c-50ef89cb60e5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/code/lstm_generate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CS155_project3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CS155_project3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/lstm_generate.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/lstm_generate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/p3_lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/p3_lstm.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +24,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/HMM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6373">
-              <caret line="395" column="81" lean-forward="true" selection-start-line="395" selection-start-column="22" selection-end-line="395" selection-end-column="81" />
+            <state relative-caret-position="6713">
+              <caret line="415" column="81" selection-start-line="415" selection-start-column="81" selection-end-line="415" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -54,11 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/HMM_helper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1700">
-              <caret line="100" column="53" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
-              <folding>
-                <element signature="e#183#192#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1649">
+              <caret line="103" column="53" selection-start-line="103" selection-start-column="53" selection-end-line="103" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -66,7 +61,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="499">
+            <state relative-caret-position="367">
               <caret line="49" selection-start-line="49" selection-end-line="49" />
               <folding>
                 <element signature="e#172#178#0" expanded="true" />
@@ -75,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="44" column="79" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
+            <state relative-caret-position="191">
+              <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -87,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/lstm_generate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="55" column="45" lean-forward="true" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="45" />
+            <state relative-caret-position="218">
+              <caret line="76" column="23" lean-forward="true" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -125,8 +120,8 @@
         <option value="$PROJECT_DIR$/code/HMM.py" />
         <option value="$PROJECT_DIR$/code/HMM_helper.py" />
         <option value="$PROJECT_DIR$/code/p3_hmm.py" />
-        <option value="$PROJECT_DIR$/code/lstm_generate.py" />
         <option value="$PROJECT_DIR$/code/p3_lstm.py" />
+        <option value="$PROJECT_DIR$/code/lstm_generate.py" />
       </list>
     </option>
   </component>
@@ -346,7 +341,21 @@
       <option name="project" value="LOCAL" />
       <updated>1583967552888</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="checkpoint">
+      <created>1583983526860</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1583983526861</updated>
+    </task>
+    <task id="LOCAL-00009" summary="checkpoint">
+      <created>1583983862366</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1583983862367</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -376,7 +385,8 @@
     <MESSAGE value="get" />
     <MESSAGE value="add lstm" />
     <MESSAGE value="change to character" />
-    <option name="LAST_COMMIT_MESSAGE" value="change to character" />
+    <MESSAGE value="checkpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkpoint" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/data/shakespeare.txt">
@@ -390,26 +400,6 @@
     <entry file="file://$PROJECT_DIR$/data/Syllable_dictionary.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-41868" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
-          <folding>
-            <element signature="e#172#178#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/HMM_helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
-          <caret line="100" column="53" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
-          <folding>
-            <element signature="e#183#192#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/checkpoints/cp.ckpt.data-00000-of-00001">
@@ -444,25 +434,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/HMM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6373">
-          <caret line="395" column="81" lean-forward="true" selection-start-line="395" selection-start-column="22" selection-end-line="395" selection-end-column="81" />
+        <state relative-caret-position="6713">
+          <caret line="415" column="81" selection-start-line="415" selection-start-column="81" selection-end-line="415" selection-end-column="81" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/lstm_generate.py">
+    <entry file="file://$PROJECT_DIR$/code/HMM_helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="55" column="45" lean-forward="true" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="45" />
+        <state relative-caret-position="1649">
+          <caret line="103" column="53" selection-start-line="103" selection-start-column="53" selection-end-line="103" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
           <folding>
-            <element signature="e#0#46#0" expanded="true" />
+            <element signature="e#172#178#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="44" column="79" selection-start-line="44" selection-start-column="79" selection-end-line="44" selection-end-column="79" />
+        <state relative-caret-position="191">
+          <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/lstm_generate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="76" column="23" lean-forward="true" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
