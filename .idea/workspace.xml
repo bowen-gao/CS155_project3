@@ -4,7 +4,6 @@
     <list default="true" id="8dce963e-fc96-46b6-874c-50ef89cb60e5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/lstm_generate.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/lstm_generate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/p3_lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/p3_lstm.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +24,7 @@
         <entry file="file://$PROJECT_DIR$/code/HMM.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="6713">
-              <caret line="415" column="81" selection-start-line="415" selection-start-column="81" selection-end-line="415" selection-end-column="81" />
+              <caret line="423" column="81" selection-start-line="423" selection-start-column="81" selection-end-line="423" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -61,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="520">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
               <folding>
                 <element signature="e#172#178#0" expanded="true" />
               </folding>
@@ -73,7 +72,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
+            <state relative-caret-position="-292">
               <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
@@ -85,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/lstm_generate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="76" column="23" lean-forward="true" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
+            <state relative-caret-position="293">
+              <caret line="47" column="3" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -355,7 +354,21 @@
       <option name="project" value="LOCAL" />
       <updated>1583983862367</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="finally">
+      <created>1583986354317</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1583986354318</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update hmm">
+      <created>1583988887850</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1583988887851</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -386,7 +399,9 @@
     <MESSAGE value="add lstm" />
     <MESSAGE value="change to character" />
     <MESSAGE value="checkpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="checkpoint" />
+    <MESSAGE value="finally" />
+    <MESSAGE value="update hmm" />
+    <option name="LAST_COMMIT_MESSAGE" value="update hmm" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/data/shakespeare.txt">
@@ -435,7 +450,7 @@
     <entry file="file://$PROJECT_DIR$/code/HMM.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6713">
-          <caret line="415" column="81" selection-start-line="415" selection-start-column="81" selection-end-line="415" selection-end-column="81" />
+          <caret line="423" column="81" selection-start-line="423" selection-start-column="81" selection-end-line="423" selection-end-column="81" />
         </state>
       </provider>
     </entry>
@@ -448,8 +463,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/p3_hmm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        <state relative-caret-position="520">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
           <folding>
             <element signature="e#172#178#0" expanded="true" />
           </folding>
@@ -458,7 +473,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/p3_lstm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
+        <state relative-caret-position="-292">
           <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
@@ -468,8 +483,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/lstm_generate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="76" column="23" lean-forward="true" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
+        <state relative-caret-position="293">
+          <caret line="47" column="3" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>

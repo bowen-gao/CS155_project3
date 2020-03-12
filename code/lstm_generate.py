@@ -31,6 +31,7 @@ for char in text:
         index2char[count] = char
         count += 1
 print(char2index)
+'''
 text_list = []
 for char in text:
     tmp = [0] * num
@@ -44,6 +45,7 @@ for i in range(0, len(text) - 40, 1):
 
 X = np.array(X)
 Y = np.array(Y)
+'''
 model = Sequential()
 # model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
