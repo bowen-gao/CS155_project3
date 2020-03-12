@@ -430,6 +430,24 @@ class HiddenMarkovModel:
 
         return emission_result, states_result
 
+
+    def generate_emission_normal(self, M):
+        emission = []
+        states = []
+        state_0 = random.randrange(self.L)
+        states.append(state_0)
+        emission_0 = random.choices(range(self.D), weights=self.O[states[0]])[0]
+        emission.append(emission_0)
+
+        for t in range(M-1):
+            state_next = random.choices(range(self.L), weights=self.A[states[t]])[0]
+            states.append(state_next)
+            emission_next = (random.choices(range(self.D), weights=self.O[states[t+1]])[0])
+            emission.append(emission_next)
+
+        return emission, states
+
+
     def probability_alphas(self, x):
         '''
         Finds the maximum probability of a given input sequence using

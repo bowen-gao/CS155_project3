@@ -22,7 +22,7 @@ from Utility import Utility
 
 
 if __name__ == '__main__':
-    train = True
+    train = False
     n_states = 5
     N_iters = 50
     text = open(os.path.join(os.getcwd(), '../data/shakespeare.txt')).read()
