@@ -11,36 +11,25 @@ with open("../data/shakespeare.txt", 'r') as f:
     text = f.read()
 
 
-def preprocess(text):
-    return text.split()
 
-
-text = preprocess(text)
 X = []
 Y = []
-puncs = [',', '.', ':', '?', '!', ';', '(', ')']
 
 
-for i, word in enumerate(text):
-    for punc in puncs:
-        word.replace(punc, '')
-    if word[-1] == "'":
-        word = word[:-1]
-    if word[0] == "'":
-        word = word[1:]
-    text[i] = word.lower()
+
 num = len(set(text))
 dic = {}
-for i, word in enumerate(list(set(text))):
-    dic[word] = i
-for i, word in enumerate(text):
+for i, char in enumerate(list(set(text))):
+    dic[char] = i
+text_list=[]
+for char in text:
     tmp = [0] * num
-    tmp[dic[word]] = 1
-    text[i] = tmp
+    tmp[dic[char]] = 1
+    text_list.append(tmp)
 for i in range(0, len(text) - 40, 1):
     print(i)
-    seq = text[i:i + 40]
-    label = text[i + 40]
+    seq = text_list[i:i + 40]
+    label = text_list[i + 40]
     X.append(seq)
     Y.append(label)
 
@@ -57,7 +46,12 @@ print(model.summary())
 # X nx40
 
 
+def genertate(model):
+    pass
+
+
 if __name__ == '__main__':
     print(X.shape, Y.shape)
     model.fit(X, Y, epochs=10)
     model.save("models/lstm_model")
+
