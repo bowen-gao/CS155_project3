@@ -12,6 +12,12 @@ batch_size = 32
 with open("../data/shakespeare.txt", 'r') as f:
     text = f.read()
 
+new_txt = ""
+for char in text:
+    if not char.isdigit():
+        new_txt += char
+text = new_txt
+
 X = []
 Y = []
 
