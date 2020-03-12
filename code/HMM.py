@@ -341,38 +341,58 @@ class HiddenMarkovModel:
                 for ob in range(self.D):
                     self.O[state][ob] = O_nume[state][ob] / O_deno[state][ob]
 
+    def dfs(self, word1, word2, stress_dic, visited):
+        print(word1, word2)
+        if word1 in visited:
+            return False
+        if word2 in stress_dic[word1]:
+            return True
+        visited.add(word1)
+        for neighbor in stress_dic[word1]:
+            if self.dfs(neighbor, word2, stress_dic, visited):
+                return True
+        return False
 
-    def recur(self, curr_emission, count, syl_dic, cur_state, obs_map_r, emission, state):
+
+    def recur(self, curr_emission, count, syl_dic, cur_state, obs_map_r, emission, state, stress_dic):
         if count > 10:
             return False, None, None
         word = obs_map_r[curr_emission]
         normal_syl, end_syl = syl_dic[word]
         for syl in end_syl:
             if count + syl == 10:
-                #emission.append(curr_emission)
-                #state.append(cur_state)
+                emission.append(curr_emission)
+                state.append(cur_state)
+                #print(count + syl)
                 return True, emission[:], state[:]
         for syl in normal_syl:
-            pre_state = cur_state
-            cur_state = random.choices([i for i in range(self.L)], self.A[pre_state])[0]
-            cur_emission = random.choices([i for i in range(self.D)], self.O[cur_state])[0]
-
-
-            emission.append(cur_emission)
+            emission.append(curr_emission)
             state.append(cur_state)
-            flag, res_emission, res_state = self.recur(cur_emission, count+syl, syl_dic, cur_state, obs_map_r, emission, state)
-            if flag:
-                return True, res_emission[:], res_state[:]
+            pre_state = cur_state
+            while True:
+                s = set()
+                next_state = random.choices([i for i in range(self.L)], self.A[pre_state])[0]
+                next_emission = random.choices([i for i in range(self.D)], self.O[cur_state])[0]
+                if self.dfs(obs_map_r[curr_emission], obs_map_r[next_emission], stress_dic, s):
+                    break
+            if count + syl < 10:
+                flag, res_emission, res_state = self.recur(next_emission, count+syl, syl_dic, next_state, obs_map_r, emission, state, stress_dic)
+                if flag:
+                    return True, res_emission[:], res_state[:]
+                else:
+                    emission.pop()
+                    state.pop()
             else:
                 emission.pop()
                 state.pop()
+                return False, None, None
         return False, None, None
 
 
 
     #recur(curr_emission, 0, syl_dic, cur_state, obs_map_r, [], [])
 
-    def generate_emission(self, obs_map_r, syl_dic):
+    def generate_emission(self, obs_map_r, syl_dic, stress_dic):
         '''
         Generates an emission of length M, assuming that the starting state
         is chosen uniformly at random. 
@@ -395,7 +415,7 @@ class HiddenMarkovModel:
         while True:
             state_0 = random.choices([i for i in range(self.L)], self.A_start)[0]
             emission_0 = random.choices([i for i in range(self.D)], self.O[state_0])[0]
-            flag, emission_result, states_result = self.recur(emission_0, count, syl_dic, state_0, obs_map_r, emission, states)
+            flag, emission_result, states_result = self.recur(emission_0, count, syl_dic, state_0, obs_map_r, emission, states, stress_dic)
             if flag:
                 break
 

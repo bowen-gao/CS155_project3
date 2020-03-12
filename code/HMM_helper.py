@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from matplotlib import animation
 from matplotlib.animation import FuncAnimation
+import collections
 
 
 ####################
@@ -91,12 +92,14 @@ def parse_observations(text):
     obs = []
     obs_map = {}
 
+    stress_dic = collections.defaultdict(set)
+
     for line in lines:
         obs_elem = []
         if len(line) == 1:
             continue
         
-        for word in line:
+        for i, word in enumerate(line):
             #word = re.sub(r',.:?!', '', word).lower()
             mapping = [',', '.', ':', '?', '!', ';', '(', ')']
             for m in mapping:
@@ -113,11 +116,19 @@ def parse_observations(text):
             
             # Add the encoded word.
             obs_elem.append(obs_map[word])
+
+            if i + 1 < len(line):
+                stress_dic[word].add(line[i + 1])
+            if i - 1 >= 0:
+                stress_dic[word].add(line[i - 1])
         
         # Add the encoded sequence.
         obs.append(obs_elem)
 
-    return obs, obs_map
+
+    print(stress_dic)
+
+    return obs, obs_map, stress_dic
 
 def obs_map_reverser(obs_map):
     obs_map_r = {}
@@ -127,12 +138,12 @@ def obs_map_reverser(obs_map):
 
     return obs_map_r
 
-def sample_sentence(hmm, obs_map, syl_dic):
+def sample_sentence(hmm, obs_map, syl_dic, stress_dic):
     # Get reverse map.
     obs_map_r = obs_map_reverser(obs_map)
 
     # Sample and convert sentence.
-    emission, states = hmm.generate_emission(obs_map_r, syl_dic)
+    emission, states = hmm.generate_emission(obs_map_r, syl_dic, stress_dic)
     sentence = [obs_map_r[i] for i in emission]
 
     return ' '.join(sentence).capitalize()
