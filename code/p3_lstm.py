@@ -2,6 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.models import load_model
 
 import re
 
@@ -12,22 +13,27 @@ batch_size = 32
 with open("../data/shakespeare.txt", 'r') as f:
     text = f.read()
 
-new_txt = ""
-for char in text:
-    if not char.isdigit():
-        new_txt += char
-text = new_txt
+lines = text.split('\n')
+newtxt = ""
+for line in lines:
+    if line == '':
+        continue
+    if line.strip().isdigit():
+        continue
+    newtxt += line + '\n'
+
+text = newtxt
 
 X = []
 Y = []
 
 num = len(set(text))
 dic = {}
-count=0
+count = 0
 for char in text:
     if char not in dic:
         dic[char] = count
-        count+=1
+        count += 1
 text_list = []
 print(dic)
 for char in text:
@@ -52,14 +58,12 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 print(model.summary())
 
 # X nx40
-cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/model",
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/model2",
                                                  save_weights_only=False,
                                                  verbose=1)
 
-
-
-
 if __name__ == '__main__':
     print(X.shape, Y.shape)
+    #model = load_model('checkpoints/model')
     model.fit(X, Y, epochs=100, callbacks=[cp_callback])
     model.save("models/lstm_model")

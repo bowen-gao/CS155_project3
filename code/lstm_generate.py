@@ -15,11 +15,16 @@ with open("../data/shakespeare.txt", 'r') as f:
 
 X = []
 Y = []
-new_txt = ""
-for char in text:
-    if not char.isdigit():
-        new_txt += char
-text = new_txt
+lines = text.split('\n')
+newtxt = ""
+for line in lines:
+    if line == '':
+        continue
+    if line.strip().isdigit():
+        continue
+    newtxt += line + '\n'
+
+text = newtxt
 
 num = len(set(text))
 char2index = {}
@@ -63,7 +68,7 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/cp.ckpt",
 
 def genertate(model):
     text = "shall i compare thee to a summer's day?\n"
-    for i in range(100):
+    for i in range(560):
         x = []
         for j in range(40):
             tmp = [0] * num
@@ -80,7 +85,7 @@ def genertate(model):
 
 
 if __name__ == '__main__':
-    model = load_model('checkpoints/model')
+    model = load_model('checkpoints/model2')
     # print(newmodel.evaluate(X, Y, verbose=1))
     # model.save("models/lstm_model")
     genertate(model)
