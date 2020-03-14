@@ -55,7 +55,7 @@ model = Sequential()
 # model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
 model.add(Dense(num))
-model.add(Lambda(lambda x: x / 1.5))
+model.add(Lambda(lambda x: x / 0.25))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
@@ -75,7 +75,7 @@ def genertate(model):
             index = char2index[text[i + j]]
             tmp[index] = 1
             x.append(tmp)
-        x = np.array(x).reshape((1, len(x), len(x[1])))
+        x = np.array(x).reshape((1, len(x), len(x[1]))).astype(np.float32)
         y = model.predict(x)[0]
 
         index = random.choices([i for i in range(num)], y)[0]

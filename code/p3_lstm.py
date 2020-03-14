@@ -6,8 +6,7 @@ from tensorflow.keras.models import load_model
 
 import re
 
-embed_dim = 128
-lstm_out = 150
+lstm_out = 100
 batch_size = 32
 
 with open("../data/shakespeare.txt", 'r') as f:
@@ -58,7 +57,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 print(model.summary())
 
 # X nx40
-cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/model2",
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/model100",
                                                  save_weights_only=False,
                                                  verbose=1)
 
@@ -66,4 +65,4 @@ if __name__ == '__main__':
     print(X.shape, Y.shape)
     #model = load_model('checkpoints/model')
     model.fit(X, Y, epochs=100, callbacks=[cp_callback])
-    model.save("models/lstm_model")
+    model.save("models/lstm_model100")
