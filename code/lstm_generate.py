@@ -55,7 +55,7 @@ model = Sequential()
 # model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
 model.add(Dense(num))
-model.add(Lambda(lambda x: x / 0.25))
+model.add(Lambda(lambda x: x / 1.5))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
@@ -68,7 +68,7 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/cp.ckpt",
 
 def genertate(model):
     text = "shall i compare thee to a summer's day?\n"
-    for i in range(560):
+    for i in range(600):
         x = []
         for j in range(40):
             tmp = [0] * num
@@ -86,6 +86,6 @@ def genertate(model):
 
 if __name__ == '__main__':
     model = load_model('checkpoints/model2')
-    # print(newmodel.evaluate(X, Y, verbose=1))
+    print(model.evaluate(X, Y, verbose=1))
     # model.save("models/lstm_model")
-    genertate(model)
+    #genertate(model)

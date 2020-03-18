@@ -35,6 +35,7 @@
 # To get started, just fill in code where indicated. Best of luck!
 
 import random
+import numpy as np
 
 
 class HiddenMarkovModel:
@@ -363,8 +364,10 @@ class HiddenMarkovModel:
             return False, None, None
         word = obs_map_r[curr_emission]
         normal_syl, end_syl = syl_dic[word]
+        prohibition = ['and', 'the', 'my', 'an', 'i', 'he', 'she']
+        
         for syl in end_syl:
-            if count + syl == 10:
+            if count + syl == 10 and word not in prohibition:
                 emission.append(curr_emission)
                 state.append(cur_state)
                 #print(count + syl)
@@ -372,16 +375,38 @@ class HiddenMarkovModel:
         for syl in normal_syl:
             emission.append(curr_emission)
             state.append(cur_state)
-            pre_state = cur_state
             while True:
                 s = set()
+                '''
+                sorted_A = sorted(self.A[pre_state])
+                for i in range(len(sorted_A):
+                    sorted_O = sorted(self.O[cur_state])
+                    for j in range(sorted_O):
+                        next_state = self.
+                        if self.dfs(obs_map_r[curr_emission], obs_map_r[next_emission], stress_dic, s):
+                '''
+                copy_A = np.copy(self.A)
+                copy_O = np.copy(self.O)
+                '''
                 next_state = random.choices([i for i in range(self.L)], self.A[pre_state])[0]
-                next_emission = random.choices([i for i in range(self.D)], self.O[cur_state])[0]
+                next_emission = random.choices([i for i in range(self.D)], self.O[next_state])[0]
+                '''
+                next_state = random.choices([i for i in range(self.L)], copy_A[cur_state])[0]
+                next_emission = random.choices([i for i in range(self.D)], copy_O[next_state])[0]
                 #print(next_state)
-                #print('curr_e = ',obs_map_r[next_emission])
+                #print('next_e = ', obs_map_r[next_emission])
+                #print('curr_e = ', obs_map_r[curr_emission])
                 if self.dfs(obs_map_r[curr_emission], obs_map_r[next_emission], stress_dic, s):
-                    #print('dsd')
                     break
+                
+                else:
+                    #print(copy_O[next_state])
+                    #print(copy_A[cur_state])
+                    copy_O[next_state][next_emission] = 0
+                    if sum(copy_O[next_state]) == 0:
+                        copy_A[cur_state][next_state] = 0
+                
+                    
                 #print('dsd')
             if count + syl < 10:
                 flag, res_emission, res_state = self.recur(next_emission, count+syl, syl_dic, next_state, obs_map_r, emission, state, stress_dic)
@@ -429,24 +454,6 @@ class HiddenMarkovModel:
 
 
         return emission_result, states_result
-
-
-    def generate_emission_normal(self, M):
-        emission = []
-        states = []
-        state_0 = random.randrange(self.L)
-        states.append(state_0)
-        emission_0 = random.choices(range(self.D), weights=self.O[states[0]])[0]
-        emission.append(emission_0)
-
-        for t in range(M-1):
-            state_next = random.choices(range(self.L), weights=self.A[states[t]])[0]
-            states.append(state_next)
-            emission_next = (random.choices(range(self.D), weights=self.O[states[t+1]])[0])
-            emission.append(emission_next)
-
-        return emission, states
-
 
     def probability_alphas(self, x):
         '''

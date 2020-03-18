@@ -23,7 +23,7 @@ from Utility import Utility
 
 if __name__ == '__main__':
     train = False
-    n_states = 5
+    n_states = 10
     N_iters = 50
     text = open(os.path.join(os.getcwd(), '../data/shakespeare.txt')).read()
     obs, obs_map, stress_dic = parse_observations(text)
@@ -31,11 +31,11 @@ if __name__ == '__main__':
     # Train the HMM.
     if train:
         HMM = unsupervised_HMM(obs, n_states, N_iters)
-        file = open('hmm.txt','wb')
+        file = open('hmm_10.txt','wb')
         pickle.dump(HMM, file)
         file.close()
     else:
-        file = open("hmm.txt", "rb")
+        file = open("hmm_10.txt", "rb")
         HMM = pickle.load(file)
 
     #######
@@ -62,7 +62,7 @@ if __name__ == '__main__':
         syl_dic[line[0]] = [normal_syl, end_syl]
     #########
     #print(syl_dic)
-    for j in range(10):
+    for j in range(20):
         for i in range(12):
             print(sample_sentence(HMM, obs_map, syl_dic, stress_dic))
         for i in range(2):

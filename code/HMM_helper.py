@@ -52,7 +52,7 @@ def text_to_wordcloud(text, max_words=50, title='', show=True):
 
     return wordcloud
 
-def states_to_wordclouds(hmm, obs_map, syl_dic, stress_dic, max_words=50, show=True):
+def states_to_wordclouds(hmm, obs_map, max_words=50, show=True):
     # Initialize.
     M = 100000
     n_states = len(hmm.A)
@@ -60,7 +60,7 @@ def states_to_wordclouds(hmm, obs_map, syl_dic, stress_dic, max_words=50, show=T
     wordclouds = []
 
     # Generate a large emission.
-    emission, states = hmm.generate_emission_normal(M)
+    emission, states = hmm.generate_emission(M)
 
     # For each state, get a list of observations that have been emitted
     # from that state.
@@ -106,7 +106,7 @@ def parse_observations(text):
                 word = word.replace(m, '')
             word = word.lower()
             
-            special = ["'gainst" ,"'greeing", "'scaped'", "'tis", "'twixt"]
+            special = ["'gainst" ,"'greeing", "'scaped'", "'tis", "'twixt", "t'", "th'"]
             if word not in special:
                 if word[-1] == "'":
                     word = word[:-1]
@@ -131,7 +131,7 @@ def parse_observations(text):
         obs.append(obs_elem)
 
 
-    # print(stress_dic)
+    #print(stress_dic)
 
     return obs, obs_map, stress_dic
 

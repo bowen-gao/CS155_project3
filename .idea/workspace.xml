@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dce963e-fc96-46b6-874c-50ef89cb60e5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CS155_project3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CS155_project3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/HMM.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/HMM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/HMM_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/HMM_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/lstm_generate.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/lstm_generate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/p3_lstm.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/p3_lstm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/p3_hmm.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/p3_hmm.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +173,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1583898152240</updated>
-      <workItem from="1584156423134" duration="2573000" />
+      <workItem from="1584156423134" duration="6294000" />
     </task>
     <task id="LOCAL-00001" summary="get">
       <created>1583903360692</created>
@@ -259,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583996611417</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update hmm">
+      <created>1584162322771</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1584162322772</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,7 +293,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="update hmm" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CS155_project3$lstm_generate.coverage" NAME="lstm_generate Coverage Results" MODIFIED="1584158928893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+    <SUITE FILE_PATH="coverage/CS155_project3$lstm_generate.coverage" NAME="lstm_generate Coverage Results" MODIFIED="1584235559332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/CS155_project3$p3_lstm.coverage" NAME="p3_lstm Coverage Results" MODIFIED="1584158082631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
   </component>
 </project>
