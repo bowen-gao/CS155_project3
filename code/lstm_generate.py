@@ -6,15 +6,19 @@ import tensorflow as tf
 import random
 import re
 
+# model parameters
 embed_dim = 128
 lstm_out = 150
 batch_size = 32
 
+# load text
 with open("../data/shakespeare.txt", 'r') as f:
     text = f.read()
 
 X = []
 Y = []
+
+# preprocessing
 lines = text.split('\n')
 newtxt = ""
 for line in lines:
@@ -26,6 +30,7 @@ for line in lines:
 
 text = newtxt
 
+# get two dictionaries
 num = len(set(text))
 char2index = {}
 index2char = {}
@@ -35,37 +40,20 @@ for char in text:
         char2index[char] = count
         index2char[count] = char
         count += 1
-print(char2index)
-'''
-text_list = []
-for char in text:
-    tmp = [0] * num
-    tmp[char2index[char]] = 1
-    text_list.append(tmp)
-for i in range(0, len(text) - 40, 1):
-    seq = text_list[i:i + 40]
-    label = text_list[i + 40]
-    X.append(seq)
-    Y.append(label)
 
-X = np.array(X)
-Y = np.array(Y)
-'''
+# define the model
 model = Sequential()
-# model.add(Embedding(num, embed_dim, input_length=40))
 model.add(LSTM(lstm_out, input_shape=(40, num)))
 model.add(Dense(num))
 model.add(Lambda(lambda x: x / 1.5))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-
-# X nx40
 cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath="checkpoints/cp.ckpt",
                                                  save_weights_only=False,
                                                  verbose=1)
 
-
+# generate sequence char by char
 def genertate(model):
     text = "shall i compare thee to a summer's day?\n"
     for i in range(600):
@@ -77,7 +65,6 @@ def genertate(model):
             x.append(tmp)
         x = np.array(x).reshape((1, len(x), len(x[1]))).astype(np.float32)
         y = model.predict(x)[0]
-
         index = random.choices([i for i in range(num)], y)[0]
         char = index2char[index]
         text += char
