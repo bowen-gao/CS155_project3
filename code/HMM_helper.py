@@ -86,6 +86,9 @@ def states_to_wordclouds(hmm, obs_map, max_words=50, show=True):
 
 def parse_observations(text):
     # Convert text to dataset.
+    '''
+    pre-processing and getting stress dictionary
+    '''
     lines = [line.split() for line in text.split('\n') if line.split()]
 
     obs_counter = 0
