@@ -1,6 +1,8 @@
 import numpy as np
 import os
-
+'''
+transform Syllable_dictionary.txt to a dictionary
+'''
 dic = open(os.path.join(os.getcwd(), '../data/Syllable_dictionary.txt')).read()
 lines = [line.split() for line in dic.split('\n') if line.split()]
 
