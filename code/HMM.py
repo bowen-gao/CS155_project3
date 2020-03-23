@@ -343,6 +343,9 @@ class HiddenMarkovModel:
                     self.O[state][ob] = O_nume[state][ob] / O_deno[state][ob]
 
     def dfs(self, word1, word2, stress_dic, visited):
+        '''
+        function for stressing modification
+        '''
         #print(stress_dic)
         #print(word1, word2)
         #print(visited)
@@ -359,6 +362,9 @@ class HiddenMarkovModel:
 
 
     def recur(self, curr_emission, count, syl_dic, cur_state, obs_map_r, emission, state, stress_dic):
+        '''
+        function for guaranteeing ten syllables per sentence
+        '''
         #print(emission)
         if count > 10:
             return False, None, None
