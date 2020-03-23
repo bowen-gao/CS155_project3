@@ -14,7 +14,10 @@ from HMM_helper import (
     visualize_sparsities,
     animate_emission
 )
-
+'''
+Visualization for our HMM model.
+We choose the similar ways for homework 6
+'''
 #######
 dic = open(os.path.join(os.getcwd(), '../data/Syllable_dictionary.txt')).read()
 lines = [line.split() for line in dic.split('\n') if line.split()]
